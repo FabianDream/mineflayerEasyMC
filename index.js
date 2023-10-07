@@ -1,29 +1,42 @@
 const createClient = require('./easyMcClient')
+const readline = require('readline-sync')
+const rl = require('node:readline')
 
-// example usage
-const client = createClient({
-    host: 'continental-mc.net',
+var server = readline.question("Please give the ip of the server: ")
+var token = readline.question("Please give the token for the bot: ")
+
+const bot = createClient({
+    host: server,
     auth: 'easyMc',
     version: '1.18',
-    easyMcToken: 'UNhXfLlzz7MI7hOO5KdR'
+    easyMcToken: token
 })
 
-client.on('connect', function () {
+bot.on('connect', function () {
     console.info('connected')
 })
-client.on('disconnect', function (packet) {
+bot.on('disconnect', function (packet) {
     console.log('disconnected: ' + packet.reason)
 })
-client.on('end', function () {
+bot.on('end', function () {
     console.log('Connection lost')
 })
-client.on('error', function (error) {
+bot.on('error', function (error) {
     console.log('Client Error', error)
 })
-client.on('kick_disconnect', (reason) => {
+bot.on('kick_disconnect', (reason) => {
     console.log('Kicked for reason', reason)
 })
-client.on('chat', function (packet) {
+bot.on('chat', function (packet) {
     const jsonMsg = JSON.parse(packet.message)
     console.log(jsonMsg)
 })
+
+const rel = rl.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
+rel.on('line', (input) => {
+    bot.chat(input);
+});
