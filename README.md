@@ -5,4 +5,4 @@
 3. enjoy
 
 If you want the replit version
-https://replit.com/@toaderfd/easymc-minecraft-bot
+https://replit.com/@FabianDream/easymc-minecraft-bot
